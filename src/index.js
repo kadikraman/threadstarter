@@ -1,9 +1,9 @@
-const fetch = require('node-fetch');
+const fetch = require('node-fetch'); // eslint-disable-line
 const { getBotToken } = require('./secrets');
 const { getEventType } = require('./events');
 const { eventTypes } = require('./consts');
 
-module.exports.default = async (event, context) => {
+module.exports.default = async event => {
   if (!event.body) {
     return { statusCode: 400 };
   }
@@ -16,7 +16,7 @@ module.exports.default = async (event, context) => {
   if (body.token && body.challenge && body.type) {
     return {
       statusCode: 200,
-      body: JSON.stringify({ challenge: body.challenge })
+      body: JSON.stringify({ challenge: body.challenge }),
     };
   }
 
@@ -29,7 +29,7 @@ module.exports.default = async (event, context) => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Unable to parse bot token' })
+      body: JSON.stringify({ error: 'Unable to parse bot token' }),
     };
   }
 
@@ -39,12 +39,12 @@ module.exports.default = async (event, context) => {
       body: JSON.stringify({
         channel: body.event.channel,
         text: 'Remember to use threads! :thread:',
-        thread_ts: body.event.ts
+        thread_ts: body.event.ts,
       }),
       headers: {
         Authorization: `Bearer ${botToken}`,
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
   }
 

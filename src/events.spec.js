@@ -16,12 +16,12 @@ describe('events', () => {
           ts: '1551629282.002400',
           channel: 'C0E67FMMJ',
           event_ts: '1551629282.002400',
-          channel_type: 'channel'
+          channel_type: 'channel',
         },
         type: 'event_callback',
         event_id: 'EvGMNMR42Y',
         event_time: 1551629282,
-        authed_users: ['UGMF2HYAY']
+        authed_users: ['UGMF2HYAY'],
       };
 
       expect(getEventType(body)).toBe(eventTypes.TOP_LEVEL_MESSAGE);
@@ -43,12 +43,12 @@ describe('events', () => {
           parent_user_id: 'U7TAFNSGJ',
           channel: 'C0E67FMMJ',
           event_ts: '1551629283.002500',
-          channel_type: 'channel'
+          channel_type: 'channel',
         },
         type: 'event_callback',
         event_id: 'EvGN42N79T',
         event_time: 1551629283,
-        authed_users: ['UGMF2HYAY']
+        authed_users: ['UGMF2HYAY'],
       };
       expect(getEventType(body)).toBe(eventTypes.BOT_MESSAGE);
     });
@@ -68,12 +68,12 @@ describe('events', () => {
           parent_user_id: 'U7TAFNSGJ',
           channel: 'C0E67FMMJ',
           event_ts: '1551629987.002700',
-          channel_type: 'channel'
+          channel_type: 'channel',
         },
         type: 'event_callback',
         event_id: 'EvGNS1FYJ3',
         event_time: 1551629987,
-        authed_users: ['UGMF2HYAY']
+        authed_users: ['UGMF2HYAY'],
       };
       expect(getEventType(body)).toBe(eventTypes.THREADED_REPLY);
     });

@@ -3,10 +3,9 @@ const aws = require('aws-sdk');
 const getBotToken = () =>
   new Promise((resolve, reject) => {
     const kms = new aws.KMS();
-
     kms.decrypt(
       {
-        CiphertextBlob: new Buffer(process.env.BOT_USER_TOKEN, 'base64')
+        CiphertextBlob: Buffer.from(process.env.BOT_USER_TOKEN, 'base64'),
       },
       (error, data) => {
         if (error) {
@@ -19,5 +18,5 @@ const getBotToken = () =>
   });
 
 module.exports = {
-  getBotToken
+  getBotToken,
 };

@@ -11,21 +11,20 @@ const getEventType = requestBody => {
   }
 
   const isMessage =
-    requestBody.event &&
-    requestBody.event.type === 'message' &&
-    !requestBody.event.subtype;
+    requestBody.event && requestBody.event.type === 'message' && !requestBody.event.subtype;
 
   if (isMessage) {
     const isParent = !requestBody.event.thread_ts;
 
     if (isParent) {
       return eventTypes.TOP_LEVEL_MESSAGE;
-    } else {
-      return eventTypes.THREADED_REPLY;
     }
+    return eventTypes.THREADED_REPLY;
   }
+
+  return eventTypes.OTHER;
 };
 
 module.exports = {
-  getEventType
+  getEventType,
 };

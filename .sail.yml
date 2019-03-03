@@ -21,7 +21,8 @@ tasks:
     image: node:carbon
     when: \/heads\/master$
     command:
-      - npx
+      - bash
     args:
-      - serverless
-      - info
+      - ./scripts/deploy.sh
+    env:
+      - TEST

@@ -6,7 +6,8 @@
   "scripts": {
     "deploy": "serverless deploy -v",
     "remove": "serverless remove",
-    "logs": "serverless logs -f message -t"
+    "logs": "serverless logs -f message -t",
+    "run-local": "serverless invoke local --function message"
   },
   "author": "",
   "license": "ISC",

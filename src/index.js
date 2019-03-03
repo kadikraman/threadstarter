@@ -1,25 +1,11 @@
 const fetch = require('node-fetch');
-const aws = require('aws-sdk');
+const { getBotToken } = require('./secrets');
 
-const getToken = () =>
-  new Promise((resolve, reject) => {
-    const kms = new aws.KMS();
+module.exports.default = async (event, context) => {
+  if (!event.body) {
+    return { statusCode: 400 };
+  }
 
-    kms.decrypt(
-      {
-        CiphertextBlob: new Buffer(process.env.BOT_USER_TOKEN, 'base64')
-      },
-      (error, data) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(data.Plaintext.toString('ascii'));
-        }
-      }
-    );
-  });
-
-module.exports.message = async (event, context) => {
   const body = JSON.parse(event.body);
 
   console.log('body ', body);
@@ -33,7 +19,7 @@ module.exports.message = async (event, context) => {
   }
 
   try {
-    const token = await getToken();
+    const botToken = await getBotToken();
 
     if (body.event && body.event.type === 'message' && !body.event.subtype) {
       const isParent = !body.event.thread_ts;
@@ -47,7 +33,7 @@ module.exports.message = async (event, context) => {
             thread_ts: body.event.ts
           }),
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${botToken}`,
             'Content-Type': 'application/json'
           }
         });

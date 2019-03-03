@@ -8,7 +8,7 @@ provider:
 
 functions:
   message:
-    handler: handler.message
+    handler: src/index.default
     awsKmsKeyArn: arn:aws:kms:us-east-1:942845383262:key/de1c1154-b18e-4c0c-aae6-1f6af35f2eca
     environment:
       BOT_USER_TOKEN: AQICAHh7O9Ig4YnEskC/lGPGWQQSi3eSu1CQOJuR8FyjFrX5WwEuV6ZYJnFt2HiHLWPTjEhUAAAAljCBkwYJKoZIhvcNAQcGoIGFMIGCAgEAMH0GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMVyjF0g8brPmK7dQTAgEQgFAHioQjMxqRm0dDmq808qqX40loWVLsdA+DsgHgmYJA/w5zelk0buT96xu5roMYwakeT/ZO+oY93LGgbhqul98XjCWZAJBwi8Wj9fLGQGGnPQ==

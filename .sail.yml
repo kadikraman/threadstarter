@@ -25,4 +25,5 @@ tasks:
     args:
       - ./scripts/deploy.sh
     env:
-      - TEST
+      - AWS_KEY
+      - AWS_SECRET

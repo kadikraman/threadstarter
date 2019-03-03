@@ -1,0 +1,35 @@
+tasks:
+  build:
+    image: node:carbon
+    command:
+      - yarn
+    args:
+      - install
+  lint:
+    image: node:carbon
+    command:
+      - yarn
+    args:
+      - lint
+  test:
+    image: node:carbon
+    command:
+      - yarn
+    args:
+      - test
+  sls:
+    image: node:carbon
+    when: \/heads\/master$
+    command:
+      - yarn
+    args:
+      - global
+      - add
+      - serverless
+  deploy:
+    image: node:carbon
+    when: \/heads\/master$
+    command:
+      - sls
+    args:
+      - info

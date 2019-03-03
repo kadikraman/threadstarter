@@ -25,6 +25,15 @@ const getEventType = requestBody => {
   return eventTypes.OTHER;
 };
 
+const getBotMessage = history => {
+  const botMessage = history.messages[1];
+  if (botMessage.subtype === 'bot_message' && botMessage.text.includes('threads')) {
+    return botMessage;
+  }
+  return null;
+};
+
 module.exports = {
   getEventType,
+  getBotMessage,
 };

@@ -1,7 +1,7 @@
-const fetch = require('node-fetch'); // eslint-disable-line
-const { getBotToken } = require('./secrets');
-const { getEventType } = require('./events');
+const { getBotToken, getUserToken } = require('./secrets');
+const { getEventType, getBotMessage } = require('./events');
 const { eventTypes } = require('./consts');
+const { postMessage, getThreadHistory, deleteMessage } = require('./slack');
 
 module.exports.default = async event => {
   if (!event.body) {
@@ -10,7 +10,7 @@ module.exports.default = async event => {
 
   const body = JSON.parse(event.body);
 
-  console.log('body ', body);
+  console.info('body ', body); // this is here on purpose
 
   // Slack url verification https://api.slack.com/events/url_verification
   if (body.token && body.challenge && body.type) {
@@ -23,29 +23,43 @@ module.exports.default = async event => {
   const eventType = getEventType(body);
 
   let botToken;
+  let userToken;
 
   try {
     botToken = await getBotToken();
+    userToken = await getUserToken();
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Unable to parse bot token' }),
+      body: JSON.stringify({ error: 'Unable to parse token' }),
     };
   }
 
   if (eventType === eventTypes.TOP_LEVEL_MESSAGE) {
-    await fetch('https://slack.com/api/chat.postMessage', {
-      method: 'post',
-      body: JSON.stringify({
-        channel: body.event.channel,
-        text: 'Remember to use threads! :thread:',
-        thread_ts: body.event.ts,
-      }),
-      headers: {
-        Authorization: `Bearer ${botToken}`,
-        'Content-Type': 'application/json',
-      },
+    await postMessage({
+      channel: body.event.channel,
+      ts: body.event.ts,
+      botToken,
     });
+    console.info('Started a thread'); // this is here on purpose
+  } else if (eventType === eventTypes.THREADED_REPLY) {
+    const history = await getThreadHistory({
+      userToken,
+      channel: body.event.channel,
+      ts: body.event.thread_ts,
+    });
+
+    if (history) {
+      const botMessage = getBotMessage(history);
+      if (botMessage) {
+        await deleteMessage({
+          botToken,
+          channel: body.event.channel,
+          ts: botMessage.ts,
+        });
+        console.info('Deleted thread starter message');
+      }
+    }
   }
 
   return { statusCode: 200 };

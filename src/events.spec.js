@@ -1,4 +1,4 @@
-const { getEventType } = require('./events');
+const { getEventType, getBotMessage } = require('./events');
 const { eventTypes } = require('./consts');
 
 describe('events', () => {
@@ -76,6 +76,88 @@ describe('events', () => {
         authed_users: ['UGMF2HYAY'],
       };
       expect(getEventType(body)).toBe(eventTypes.THREADED_REPLY);
+    });
+  });
+
+  describe('#getBotMessageId', () => {
+    it('gets the id of the bot message in the thread if it exists', () => {
+      const history = {
+        messages: [
+          {
+            client_msg_id: '8ce4770c-5447-45f8-ba9b-b3f5b0f316fc',
+            type: 'message',
+            text: 'Are you still there?',
+            user: 'U7TAFNSGJ',
+            ts: '1551630651.003000',
+            thread_ts: '1551630651.003000',
+            reply_count: 3,
+            reply_users_count: 2,
+            latest_reply: '1551638358.004100',
+            reply_users: ['BGLUV25BK', 'U7TAFNSGJ'],
+            replies: [
+              {
+                user: 'BGLUV25BK',
+                ts: '1551630652.003100',
+              },
+              {
+                user: 'U7TAFNSGJ',
+                ts: '1551638326.003900',
+              },
+              {
+                user: 'U7TAFNSGJ',
+                ts: '1551638358.004100',
+              },
+            ],
+            subscribed: true,
+            last_read: '1551638358.004100',
+          },
+          {
+            type: 'message',
+            subtype: 'bot_message',
+            text: 'Remember to use threads! :thread:',
+            ts: '1551630652.003100',
+            username: 'Threadstarter',
+            bot_id: 'BGLUV25BK',
+            thread_ts: '1551630651.003000',
+            parent_user_id: 'U7TAFNSGJ',
+          },
+        ],
+        has_more: true,
+        ok: true,
+        response_metadata: {
+          next_cursor: 'bmV4dF90czoxNTUxNjM4MzI2MDAzOTAw',
+        },
+      };
+
+      expect(getBotMessage(history)).toEqual({
+        type: 'message',
+        subtype: 'bot_message',
+        text: 'Remember to use threads! :thread:',
+        ts: '1551630652.003100',
+        username: 'Threadstarter',
+        bot_id: 'BGLUV25BK',
+        thread_ts: '1551630651.003000',
+        parent_user_id: 'U7TAFNSGJ',
+      });
+    });
+
+    it('returns null when there is no bot message', () => {
+      const history = {
+        messages: [
+          {},
+          {
+            type: 'message',
+            text: 'Just a random message',
+            ts: '1551630652.003100',
+            username: 'Threadstarter',
+            bot_id: 'BGLUV25BK',
+            thread_ts: '1551630651.003000',
+            parent_user_id: 'U7TAFNSGJ',
+          },
+        ],
+      };
+
+      expect(getBotMessage(history)).toBe(null);
     });
   });
 });

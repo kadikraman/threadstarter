@@ -1,0 +1,17 @@
+{
+  "name": "threadstarter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "deploy": "serverless deploy -v",
+    "remove": "serverless remove",
+    "logs": "serverless logs -f message -t"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.413.0",
+    "node-fetch": "^2.3.0"
+  }
+}

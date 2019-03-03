@@ -7,12 +7,16 @@
     "deploy": "serverless deploy -v",
     "remove": "serverless remove",
     "logs": "serverless logs -f message -t",
-    "run-local": "serverless invoke local --function message"
+    "run-local": "serverless invoke local --function message",
+    "test": "jest ./src"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.413.0",
     "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "jest": "^24.1.0"
   }
 }

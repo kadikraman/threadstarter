@@ -28,7 +28,7 @@
     "prettier": "1.16.4"
   },
   "engines": {
-    "node": "8.10"
+    "node": "^8.10"
   },
   "husky": {
     "hooks": {

@@ -17,19 +17,11 @@ tasks:
       - yarn
     args:
       - test
-  sls:
-    image: node:carbon
-    when: \/heads\/master$
-    command:
-      - yarn
-    args:
-      - global
-      - add
-      - serverless
   deploy:
     image: node:carbon
     when: \/heads\/master$
     command:
-      - sls
+      - npx
     args:
+      - serverless
       - info

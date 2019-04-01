@@ -27,6 +27,63 @@ describe('events', () => {
       expect(getEventType(body)).toBe(eventTypes.TOP_LEVEL_MESSAGE);
     });
 
+    it('detects top level image messages correctly', () => {
+      const body = {
+        token: 'nothing-to-see-here',
+        team_id: 'T02913TEC',
+        api_app_id: 'AGNHF279D',
+        event: {
+          type: 'message',
+          text: 'Image test',
+          files: [[Object]],
+          upload: true,
+          user: 'U7TAFNSGJ',
+          display_as_bot: false,
+          ts: '1554148443.001100',
+          client_msg_id: '9e40bae9-1cff-46cb-aa3d-ba1a8900f9b6',
+          channel: 'C0E67FMMJ',
+          subtype: 'file_share',
+          event_ts: '1554148443.001100',
+          channel_type: 'channel',
+        },
+        type: 'event_callback',
+        event_id: 'EvHJ23SFSQ',
+        event_time: 1554148443,
+        authed_users: ['UGMF2HYAY'],
+      };
+
+      expect(getEventType(body)).toBe(eventTypes.TOP_LEVEL_IMAGE_MESSAGE);
+    });
+
+    it('detects a threaded image message', () => {
+      const body = {
+        token: 'nothing-to-see-here',
+        team_id: 'T02913TEC',
+        api_app_id: 'AGNHF279D',
+        event: {
+          type: 'message',
+          text: '',
+          files: [[Object]],
+          upload: true,
+          user: 'U7TAFNSGJ',
+          display_as_bot: false,
+          ts: '1554149056.002200',
+          client_msg_id: '3731aaf2-5c51-4ba8-a105-116dd13cefac',
+          thread_ts: '1554148443.001100',
+          parent_user_id: 'U7TAFNSGJ',
+          channel: 'C0E67FMMJ',
+          subtype: 'file_share',
+          event_ts: '1554149056.002200',
+          channel_type: 'channel',
+        },
+        type: 'event_callback',
+        event_id: 'EvHJD8EAJH',
+        event_time: 1554149056,
+        authed_users: ['UGMF2HYAY'],
+      };
+      expect(getEventType(body)).toBe(eventTypes.THREADED_REPLY);
+    });
+
     it('detects its own threaded reply correctly', () => {
       const body = {
         token: 'nothing-to-see-here',

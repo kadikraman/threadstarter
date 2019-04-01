@@ -35,7 +35,7 @@ module.exports.default = async event => {
     };
   }
 
-  if (eventType === eventTypes.TOP_LEVEL_MESSAGE) {
+  if ([eventTypes.TOP_LEVEL_MESSAGE, eventTypes.TOP_LEVEL_IMAGE_MESSAGE].includes(eventType)) {
     await postMessage({
       channel: body.event.channel,
       ts: body.event.ts,

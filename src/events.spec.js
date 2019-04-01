@@ -35,7 +35,7 @@ describe('events', () => {
         event: {
           type: 'message',
           text: 'Image test',
-          files: [[Object]],
+          files: [[{}]],
           upload: true,
           user: 'U7TAFNSGJ',
           display_as_bot: false,
@@ -63,7 +63,7 @@ describe('events', () => {
         event: {
           type: 'message',
           text: '',
-          files: [[Object]],
+          files: [[{}]],
           upload: true,
           user: 'U7TAFNSGJ',
           display_as_bot: false,

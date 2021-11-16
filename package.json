@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.413.0",
+    "aws-sdk": "^2.814.0",
     "node-fetch": "^2.3.0"
   },
   "devDependencies": {

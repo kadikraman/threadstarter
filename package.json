@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.413.0",
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "eslint": "^5.15.0",
